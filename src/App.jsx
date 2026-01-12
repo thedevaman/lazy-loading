@@ -9,21 +9,39 @@ function App() {
   const fetchData = async ()=>{
  const res = await axios.get(`https://picsum.photos/v2/list?page=${page}&limit=6`)
 
-   setImages(res.data)
+   setImages(prevImages =>[...prevImages,...res.data]);
 
   }
 
   useEffect(()=>{
    fetchData()
-  },[])
+  },[page])
 
   useEffect(()=>{
-
+    const handleScroll = () =>{
     const windowHeight = window.innerHeight;
-    const scrollYHeight = window.scrollY;
-   console.log(windowHeight)
-   console.log(scrollYHeight)
+    const scrollY = window.scrollY;
+    const ScrollableHeight = document.documentElement.scrollHeight
+
+    if(ScrollableHeight <= windowHeight+scrollY)
+    {
+  setPage(page+1)
+    }
+
+
+  
+    }
+
+   
+    window.addEventListener('scroll',handleScroll)
+
+    return () => window.addEventListener('scroll',handleScroll)
   })
+
+  
+
+  
+   
 
 
   return (
