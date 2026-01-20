@@ -1,3 +1,4 @@
+import { Skeleton } from 'antd'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
@@ -11,7 +12,7 @@ function App() {
  const res = await axios.get(`https://picsum.photos/v2/list?page=${page}&limit=6`)
 
    setImages(prevImages =>[...prevImages,...res.data]);
-
+   setLoad(true)
   }
 
   useEffect(()=>{
@@ -51,14 +52,10 @@ function App() {
       <div className='grid grid-cols-3 space-x-2 space-y-2 mt-5'>
        {
         !load && 
-        <div
-      style={{
-        width: "100%",
-        height: "100%",
-        background: "#e2e2e2",
-        animation: "pulse 1.5s infinite"
-      }}
-    ></div>
+        Array.from({length:6}).map((_,i) => (
+      <Skeleton.Image active 
+      style={{ width: '100%', height: '400px' }}  />
+       ))
 }
 
         {
